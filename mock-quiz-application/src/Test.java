@@ -2,6 +2,8 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
+
+// Create the GUI Panel
 public class Test extends JFrame implements ActionListener{
 
 	JLabel label;
@@ -47,6 +49,8 @@ public class Test extends JFrame implements ActionListener{
 		setVisible(true);
 		setSize(600, 350);
 	}
+	
+	// Add Action Listener to change screen when Next Button is pressed
 
 	public void actionPerformed(ActionEvent e) {
 		
@@ -57,7 +61,8 @@ public class Test extends JFrame implements ActionListener{
 		}
 	}
 
-	public void set() {
+	// Update the Question and Answer Options Text
+	private void set() {
 
 		if (current == 0) {
 			label.setText("Que1: Which one among these is not a datatype");
@@ -145,6 +150,33 @@ public class Test extends JFrame implements ActionListener{
 			radioButtonsArray[j].setBounds(50, 80 + i, 200, 20);
 		}
 
+	}
+	
+	// Check the results
+	private boolean check() {
+		
+		if(current==0)
+			return(radioButtonsArray[1].isSelected());
+		if(current==1)
+			return(radioButtonsArray[2].isSelected());
+		if(current==2)
+			return(radioButtonsArray[3].isSelected());
+		if(current==3)
+			return(radioButtonsArray[0].isSelected());
+		if(current==4)
+			return(radioButtonsArray[2].isSelected());
+		if(current==5)
+			return(radioButtonsArray[2].isSelected());
+		if(current==6)
+			return(radioButtonsArray[1].isSelected());
+		if(current==7)
+			return(radioButtonsArray[3].isSelected());
+		if(current==8)
+			return(radioButtonsArray[1].isSelected());
+		if(current==9)
+			return(radioButtonsArray[2].isSelected());
+		
+		return false;
 	}
 
 }
