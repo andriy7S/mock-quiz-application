@@ -2,16 +2,17 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-
 // Create the GUI Panel
-public class Test extends JFrame implements ActionListener{
+public class Test extends JFrame implements ActionListener {
 
 	JLabel label;
 	JRadioButton[] radioButtonsArray = new JRadioButton[5];
 	JButton nextButton;
-	ButtonGroup bg;
+	JButton result;
 
-	int count = 0, current = 0, x = 1, y = 1, now = 0;
+	ButtonGroup bg;
+	static int count = 0;
+	int current = 0, x = 1, y = 1, now = 0;
 	int m[] = new int[10];
 
 	public Test() {
@@ -19,16 +20,20 @@ public class Test extends JFrame implements ActionListener{
 		label = new JLabel();
 		add(label);
 		bg = new ButtonGroup();
-		
+
 		for (int i = 0; i < 5; i++) {
 			radioButtonsArray[i] = new JRadioButton();
 			add(radioButtonsArray[i]);
 			bg.add(radioButtonsArray[i]);
 		}
-		
+
 		nextButton = new JButton("Next");
+		result = new JButton("Result");
 		nextButton.addActionListener(this);
+		result.setEnabled(false);
+		result.addActionListener(this);
 		add(nextButton);
+		add(result);
 		set();
 
 		label.setBounds(30, 40, 450, 20);
@@ -37,11 +42,7 @@ public class Test extends JFrame implements ActionListener{
 		radioButtonsArray[2].setBounds(50, 140, 100, 20);
 		radioButtonsArray[3].setBounds(50, 170, 100, 20);
 		nextButton.setBounds(100, 240, 100, 30);
-
-		radioButtonsArray[0].setText("int");
-		radioButtonsArray[1].setText("Float");
-		radioButtonsArray[2].setText("boolean");
-		radioButtonsArray[3].setText("char");
+		result.setBounds(270, 240, 100, 30);
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(null);
@@ -49,20 +50,49 @@ public class Test extends JFrame implements ActionListener{
 		setVisible(true);
 		setSize(600, 350);
 	}
-	
+
 	// Add Action Listener to change screen when Next Button is pressed
 
 	public void actionPerformed(ActionEvent e) {
-		
+
 		if (e.getSource() == nextButton) {
-			count = count + 1;
+			// Check the current answer. If correct answer is selected increment count
+			if (check()) {
+				count = count + 1;
+			}
+			// System.out.println(count);
 			current++;
+
+			// update the Questions
 			set();
+
+			// If last Question. Enable the Results button
+			if (current == 9) {
+				nextButton.setEnabled(false);
+				result.setEnabled(true);
+				result.setText("Result");
+			}
+		}
+
+		// When results button is pressed
+		if (e.getActionCommand().equals("Result")) { // Check the current answer. If correct answer is selected
+													 // increment count
+			if (check()) {
+				count = count + 1;
+			}
+
+			// System.out.println(count);
+
+			// Show the number of correct answers
+			JOptionPane.showMessageDialog(this, "Correct Answers = " + count);
+			System.exit(0);
 		}
 	}
 
 	// Update the Question and Answer Options Text
 	private void set() {
+		
+		radioButtonsArray[4].setSelected(true);
 
 		if (current == 0) {
 			label.setText("Que1: Which one among these is not a datatype");
@@ -151,31 +181,31 @@ public class Test extends JFrame implements ActionListener{
 		}
 
 	}
-	
-	// Check the results
+
+	// Check the correct answers
 	private boolean check() {
-		
-		if(current==0)
-			return(radioButtonsArray[1].isSelected());
-		if(current==1)
-			return(radioButtonsArray[2].isSelected());
-		if(current==2)
-			return(radioButtonsArray[3].isSelected());
-		if(current==3)
-			return(radioButtonsArray[0].isSelected());
-		if(current==4)
-			return(radioButtonsArray[2].isSelected());
-		if(current==5)
-			return(radioButtonsArray[2].isSelected());
-		if(current==6)
-			return(radioButtonsArray[1].isSelected());
-		if(current==7)
-			return(radioButtonsArray[3].isSelected());
-		if(current==8)
-			return(radioButtonsArray[1].isSelected());
-		if(current==9)
-			return(radioButtonsArray[2].isSelected());
-		
+
+		if (current == 0)
+			return (radioButtonsArray[1].isSelected());
+		if (current == 1)
+			return (radioButtonsArray[2].isSelected());
+		if (current == 2)
+			return (radioButtonsArray[3].isSelected());
+		if (current == 3)
+			return (radioButtonsArray[0].isSelected());
+		if (current == 4)
+			return (radioButtonsArray[2].isSelected());
+		if (current == 5)
+			return (radioButtonsArray[2].isSelected());
+		if (current == 6)
+			return (radioButtonsArray[1].isSelected());
+		if (current == 7)
+			return (radioButtonsArray[3].isSelected());
+		if (current == 8)
+			return (radioButtonsArray[1].isSelected());
+		if (current == 9)
+			return (radioButtonsArray[2].isSelected());
+
 		return false;
 	}
 
